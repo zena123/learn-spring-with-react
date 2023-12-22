@@ -1,4 +1,4 @@
-
+import Container from './Container.js';
 import { Table } from 'antd';
 import {getAllStudents} from './client.js'
 import React, { Component } from 'react';
@@ -45,9 +45,14 @@ class  App extends Component {
         key:'gender'
         }
       ];
-      return (<Table dataSource={students}
-       columns={columns}
-        rowKey='studentId'/>);
+      return (
+      <Container>
+        <Table dataSource={students}
+          columns={columns}
+          pagination={false}
+          rowKey='studentId'/>
+        </Container>);
+        
       // callback
       // return students.map((student, index)=>{
       //   return (
