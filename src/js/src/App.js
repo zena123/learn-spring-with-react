@@ -1,29 +1,55 @@
 import Container from './Container.js';
-import { Table } from 'antd';
 import {getAllStudents} from './client.js'
 import React, { Component } from 'react';
+import { Table, Avatar, Spin } from 'antd';
 
+
+// const getIcon = () => {
+//   <Icon type="loading" style={{fontSize:24}}></Icon>
+// }
 class  App extends Component {
   state = {
-    students: []
+    students: [],
+    isFetching: false,
   }
   componentDidMount(){
     this.fetchstudents();
   }
   fetchstudents = () =>{
+    this.setState({
+      isFetching:true,
+    });
+
     getAllStudents()
     .then(res =>res.json()
     .then(students =>{
       this.setState({
-        students: students
+        students: students,
+        isFetching:false,
       })
     }));
   
   }
   render(){
-    const {students} = this.state;
+    const {students, isFetching} = this.state;
+    if (isFetching){
+      return (
+        <Container> <Spin/></Container>
+      )
+    }
     if (students && students.length) {
       const columns = [
+        {
+          title: '',
+          key: 'avatar',
+          render: (text, student) =>(
+            <Avatar size='large'>
+              {`${student.firstName.charAt(0).toUpperCase()}${student.lastName.charAt(0).toUpperCase()}`}
+            </Avatar>
+
+          )
+        },
+
         { title: 'Student Id',
         dataIndex: 'studentId',
         key:'studentId'
