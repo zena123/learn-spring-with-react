@@ -90,7 +90,9 @@ class  App extends Component {
             onOk={this.openAddStudentModal}
             onCancel={this.closeAddStudentModal}
             width={1000}>
-            <AddStudentForm />
+            <AddStudentForm 
+            onSuccess= {() => {this.closeAddStudentModal();
+            this.fetchstudents();}}/>
           </Modal>
 
           <Footer  
