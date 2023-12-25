@@ -1,7 +1,8 @@
 import Container from './Container.js';
 import {getAllStudents} from './client.js'
 import React, { Component } from 'react';
-import { Table, Avatar, Spin } from 'antd';
+import { Table, Avatar, Spin, Modal } from 'antd';
+import Footer from './Footer.js';
 
 
 // const getIcon = () => {
@@ -11,7 +12,12 @@ class  App extends Component {
   state = {
     students: [],
     isFetching: false,
+    isAddStudentModalVisible: false,
   }
+
+  openAddStudentModal = () => this.setState({isAddStudentModalVisible: true})
+  closeAddStudentModal = () => this.setState({isAddStudentModalVisible: false})
+
   componentDidMount(){
     this.fetchstudents();
   }
@@ -77,6 +83,8 @@ class  App extends Component {
           columns={columns}
           pagination={false}
           rowKey='studentId'/>
+
+          <Footer numOfStudents={students.length}></Footer>
         </Container>);
         
       // callback
