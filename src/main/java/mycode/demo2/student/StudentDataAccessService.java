@@ -13,7 +13,7 @@ public class StudentDataAccessService {
     private final JdbcTemplate jdbcTemplate;
 
     @Autowired
-    public StudentDataAccessService(JdbcTemplate jdbcTemplate) {
+    StudentDataAccessService(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
@@ -35,5 +35,15 @@ public class StudentDataAccessService {
               );
         });
     }
-    
+
+    int insertStudent(UUID newId, Student student) {
+            String sql = "" + "INSERT INTO student VALUES (?, ?, ?, ?, ?)";
+            // jdbc template will return 0 or 1
+
+            return jdbcTemplate.update(sql,
+            newId, 
+            student.getFirstName(), student.getLastName(), student.getEmail(),
+            student.getGender().name().toUpperCase());
+            
+        }    
 }

@@ -1,6 +1,7 @@
 import React, {Component} from "react";
 import {Formik} from 'formik';
 import { Button, Input, Tag } from "antd";
+import { addNewStudent } from "../client";
 
 const INPUT_BUTTOM_MARGIN = {marginBottom: '10px'};
 const TAG_STYLE =   {backgroundColor:'#f50', color:'white', ...INPUT_BUTTOM_MARGIN};
@@ -36,14 +37,14 @@ class AddStudentForm extends Component {
                 }}
         
                 onSubmit={(values, { setSubmitting }) => {
+                    addNewStudent(values).then(()=>{
+                        alert(JSON.stringify(values));
+                        setSubmitting(false);
+
+                    })
         
-                setTimeout(() => {
-        
-                    alert(JSON.stringify(values, null, 2));
-        
-                    setSubmitting(false);
-        
-                }, 400);
+                    
+    
         
                 }}>
                 {({

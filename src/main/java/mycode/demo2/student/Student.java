@@ -2,6 +2,8 @@ package mycode.demo2.student;
 
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class Student {
     private final UUID studentId;
     private final String firstName;
@@ -10,7 +12,11 @@ public class Student {
     private final Gender gender;
     enum Gender {MALE, FEMALE}
 
-    public Student(UUID studentId, String firstName, String lastName, String email, Gender gender) {
+    public Student( 
+        //we will map all json properties that comefrom the client 
+        @JsonProperty("studentId") UUID studentId, @JsonProperty("firstName") String firstName,
+        @JsonProperty("lastName") String lastName, @JsonProperty("email") String email, 
+        @JsonProperty("gender") Gender gender) {
         this.studentId = studentId;
         this.firstName = firstName;
         this.lastName = lastName;
