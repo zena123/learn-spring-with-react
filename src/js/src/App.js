@@ -3,7 +3,7 @@ import {getAllStudents} from './client.js'
 import React, { Component } from 'react';
 import { Table, Avatar, Spin, Modal } from 'antd';
 import Footer from './Footer.js';
-
+import AddStudentForm from './forms/AddStudentForm.js'
 
 // const getIcon = () => {
 //   <Icon type="loading" style={{fontSize:24}}></Icon>
@@ -37,7 +37,7 @@ class  App extends Component {
   
   }
   render(){
-    const {students, isFetching} = this.state;
+    const {students, isFetching, isAddStudentModalVisible} = this.state;
     if (isFetching){
       return (
         <Container> <Spin/></Container>
@@ -84,7 +84,18 @@ class  App extends Component {
           pagination={false}
           rowKey='studentId'/>
 
-          <Footer numOfStudents={students.length}></Footer>
+          <Modal 
+            title="add new student"
+            open = {isAddStudentModalVisible}
+            onOk={this.openAddStudentModal}
+            onCancel={this.closeAddStudentModal}
+            width={1000}>
+            <AddStudentForm />
+          </Modal>
+
+          <Footer  
+          numOfStudents={students.length}
+          handleAddStudentClickEvent={this.openAddStudentModal}></Footer>
         </Container>);
         
       // callback
@@ -98,6 +109,7 @@ class  App extends Component {
       //     </div>
       //   )
       // })
+
 
     }
     return (
