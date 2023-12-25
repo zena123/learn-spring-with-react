@@ -1,8 +1,9 @@
 import React, {Component} from "react";
 import {Formik} from 'formik';
-import { Button, Input } from "antd";
+import { Button, Input, Tag } from "antd";
 
 const INPUT_BUTTOM_MARGIN = {marginBottom: '10px'};
+const TAG_STYLE =   {backgroundColor:'#f50', color:'white', ...INPUT_BUTTOM_MARGIN};
 
 class AddStudentForm extends Component {
     render() {
@@ -28,12 +29,10 @@ class AddStudentForm extends Component {
                 }
                 if(!values.gender){
                     errors.gender = 'Required';
-                } else if (['MALE', 'FEMALE'].includes(values.gender)){
+                } else if (!['MALE', 'FEMALE'].includes(values.gender)){
                     errors.gender = "gender must be MALE, FEMALE";
                 }
-        
                 return errors;
-        
                 }}
         
                 onSubmit={(values, { setSubmitting }) => {
@@ -47,22 +46,17 @@ class AddStudentForm extends Component {
                 }, 400);
         
                 }}>
-        
                 {({
         
                 values,
-        
                 errors,
-        
                 touched,
-        
                 handleChange,
-        
                 handleBlur,
-        
-                handleSubmit,
-        
+                handleSubmit,       
                 isSubmitting,
+                submitForm,
+                isValid,
         
                 /* and other goodies */
         
@@ -77,7 +71,7 @@ class AddStudentForm extends Component {
                     value={values.firstName}
                     placeholder="first name"
                     />
-                    {errors.firstName && touched.firstName && errors.firstName}
+                    {errors.firstName && touched.firstName && <Tag style={TAG_STYLE}>{errors.firstName}</Tag>}
                     <Input
                     style={INPUT_BUTTOM_MARGIN}
                     name="lastName"       
@@ -86,7 +80,7 @@ class AddStudentForm extends Component {
                     value={values.lastName}
                     placeholder="last name"
                     />
-                    {errors.lastName && touched.lastName && errors.lastName}
+                    {errors.lastName && touched.lastName && <Tag style={TAG_STYLE}>{errors.lastName}</Tag>}
 
                     <Input
                     style={INPUT_BUTTOM_MARGIN}
@@ -96,7 +90,7 @@ class AddStudentForm extends Component {
                     value={values.email}
                     placeholder="Email"
                     />
-                    {errors.email && touched.email && errors.email}
+                    {errors.email && touched.email && <Tag style={TAG_STYLE}>{errors.email}</Tag>}
         
                     <Input   
                     style={INPUT_BUTTOM_MARGIN}    
@@ -107,9 +101,9 @@ class AddStudentForm extends Component {
                     placeholder="gender, MALE,FEMALE"
                     />
         
-                    {errors.gender && touched.gender && errors.gender}
+                    {errors.gender && touched.gender && <Tag style={TAG_STYLE}>{errors.gender}</Tag>}
         
-                    <Button type="submit" disabled={isSubmitting}>
+                    <Button onClick={() => submitForm()} type="submit" disabled={isSubmitting | (touched && !isValid)}>
         
                     Submit
         
