@@ -29,7 +29,7 @@ public class StudentController {
         return studentService.getALLStudents();
 	}
 	@PostMapping
-	public void addNewStudent(@RequestBody @Valid Student student){
+	public void addNewStudent(@RequestBody @Valid Student student) throws Exception{
 		// student is coming from the request, and valid dur to added constrains
 		studentService.addNewStudent(student);
 

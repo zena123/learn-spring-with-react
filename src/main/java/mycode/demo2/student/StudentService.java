@@ -36,6 +36,9 @@ public class StudentService {
         if (! emailValidator.test(student.getEmail())){
             throw new Exception("email not valid");
         }
+        if (studentDataAccessService.isEmailTaken(student.getEmail())){
+            throw new Exception("email already taken");
+        }
         studentDataAccessService.insertStudent(newId, student);
         
     }
