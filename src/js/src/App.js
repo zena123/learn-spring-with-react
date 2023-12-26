@@ -1,7 +1,7 @@
 import Container from './Container.js';
 import {getAllStudents} from './client.js'
 import React, { Component } from 'react';
-import { Table, Avatar, Spin, Modal } from 'antd';
+import { Table, Avatar, Spin, Modal, Empty } from 'antd';
 import Footer from './Footer.js';
 import AddStudentForm from './forms/AddStudentForm.js'
 import { errorsNotification } from './Notification.js';
@@ -50,6 +50,26 @@ class  App extends Component {
         <Container> <Spin/></Container>
       )
     }
+const commonElements = () =>(
+  <div>
+      <Modal 
+      title="add new student"
+      open = {isAddStudentModalVisible}
+      onOk={this.openAddStudentModal}
+      onCancel={this.closeAddStudentModal}
+      width={1000}>
+      <AddStudentForm 
+      onSuccess= {() => {this.closeAddStudentModal();
+      this.fetchstudents();}}/>
+    </Modal>
+
+    <Footer  
+        numOfStudents={students.length}
+        handleAddStudentClickEvent={this.openAddStudentModal}>
+    </Footer>
+  </div>
+  );
+
     if (students && students.length) {
       const columns = [
         {
@@ -91,20 +111,7 @@ class  App extends Component {
           pagination={false}
           rowKey='studentId'/>
 
-          <Modal 
-            title="add new student"
-            open = {isAddStudentModalVisible}
-            onOk={this.openAddStudentModal}
-            onCancel={this.closeAddStudentModal}
-            width={1000}>
-            <AddStudentForm 
-            onSuccess= {() => {this.closeAddStudentModal();
-            this.fetchstudents();}}/>
-          </Modal>
-
-          <Footer  
-          numOfStudents={students.length}
-          handleAddStudentClickEvent={this.openAddStudentModal}></Footer>
+        {commonElements()}
         </Container>);
         
       // callback
@@ -122,7 +129,10 @@ class  App extends Component {
 
     }
     return (
-      <h1> no students found</h1>
+      <Container>
+        <Empty description={<h1>no students found</h1>}/>
+        {commonElements()}
+      </Container>
   );
   }
 }

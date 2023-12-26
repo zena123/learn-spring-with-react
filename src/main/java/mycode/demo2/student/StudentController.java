@@ -3,6 +3,8 @@ package mycode.demo2.student;
 import java.util.List;
 import java.util.UUID;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,10 +25,12 @@ public class StudentController {
     @GetMapping
 	public List<Student> getAllStudents() {
 		// return studentService.getStudents();
+		// throw new ApiRequestException("opps , error");
         return studentService.getALLStudents();
 	}
 	@PostMapping
-	public void addNewStudent(@RequestBody Student student){  // student is coming from the request
+	public void addNewStudent(@RequestBody @Valid Student student){
+		// student is coming from the request, and valid dur to added constrains
 		studentService.addNewStudent(student);
 
 	}
