@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 import { Table, Avatar, Spin, Modal } from 'antd';
 import Footer from './Footer.js';
 import AddStudentForm from './forms/AddStudentForm.js'
+import { errorsNotification } from './Notification.js';
 
 // const getIcon = () => {
 //   <Icon type="loading" style={{fontSize:24}}></Icon>
@@ -34,7 +35,8 @@ class  App extends Component {
         isFetching:false,
       })
     })).catch(error =>{
-      console.log(error.error.message);
+      // console.log(error.);
+      errorsNotification(error.name, error.message);
       this.setState({
         isFetching:false,
       })
