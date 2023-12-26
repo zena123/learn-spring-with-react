@@ -37,7 +37,7 @@ public class StudentDataAccessService {
     }
 
     int insertStudent(UUID newId, Student student) {
-            String sql = "" + "INSERT INTO student VALUES (?, ?, ?, ?, ?)";
+            String sql = "" + "INSERT INTO student VALUES (?, ?, ?, ?, ?::gender)";
             // jdbc template will return 0 or 1
 
             return jdbcTemplate.update(sql,
